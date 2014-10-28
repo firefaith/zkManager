@@ -1,0 +1,72 @@
+#! /bin/bash
+ZK_HOME=/opt/zookeeper
+ZK_DATA_DIR=$ZK_HOME/data
+echo $ZK_HOME $ZK_DATA_DIR
+
+usage=" -s:single target,one hostname or ip address\n
+-m:multile targets,must be file\n
+-c:command shoudle be one of start,stop,status,restart,connect\n"
+erro1="erro1:no input vars"
+erro2="erro2:-st and -mt can't exist together"
+erro3="erro3:wrong var"
+if [ $# -ne 0 ]
+then 
+ while getopts "s:m:c:" opt
+  do
+    case $opt in
+         s)single_target=$OPTARG;;
+         m)multile_target=$OPTARG;;
+         c)command=$OPTARG;;
+         ?) echo $erro3
+             echo -e $usage
+             exit 1;;
+    esac
+  done
+ echo "st:" ${single_target}
+ echo "mt:" ${multile_target} 
+ echo "cmd:" ${command}
+ if [ -z $single_target ] && [ -z $multile_target ]
+ then
+    echo "st and mt are both not defined"
+    echo -e $usage
+    exit 1
+ fi
+ if [ $single_target ] && [ $multile_target ]
+ then
+    echo "st and mt are both defined,should be select one of them"
+    echo -e $usgage
+    exit 1
+ fi
+ if [ $multile_target ] && [ $command = "connect" ]
+ then
+   echo "multile target can't run connect command."
+   echo -e $usage
+   exit 1
+ fi
+
+ case $command in
+     start | begin) command="start";;
+     close | end | stop) command="stop";;
+     reset | restart) command="restart";;
+     status) command="status";;
+     ?) command="status";;
+ esac
+ if [ $multile_target ]
+ then
+   cat $multile_target | while read line
+     do
+       echo $line
+       ssh $line "${ZK_HOME}/bin/zkServer.sh $command" < /dev/null
+     done
+   exit 0
+ fi
+ if [ ${single_target} ]
+ then
+   ssh ${single_target} "sh ${ZK_HOME}/bin/zkServer.sh $command" </dev/null
+   exit 0
+ fi
+else
+  echo "no args"
+  echo -e $usage
+  exit 1
+fi

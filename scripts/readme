@@ -1,0 +1,12 @@
+add.sh
+del.sh
+cmd.sh
+zkGetInfo.sh
+moniter.sh
+pure.sh
+ ./new.sh ../test/zoo_sample.cfg 2888 3888 /opt ../package/zookeeper ../test/host.list
+
+./new.sh ../test/zoo.cfg 2888 3888 /opt ../package/zookeeper host.list
+./cmd.sh m host.list /opt/zookeeper status
+./add.sh m host.tmp zoo.cfg /opt ../package/zookeeper host.list
+
