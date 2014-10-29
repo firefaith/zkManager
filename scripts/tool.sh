@@ -1,5 +1,19 @@
 #! /bin/bash
-usage="1:hostname/ip address"
+usage="map2ip\n 1:hostname"
+if [ $# -ne 1 ];then
+ echo -e $usage
+ exit 1;
+fi
+
+function t1(){
+echo $1
+}
+function t2(){
+t1 $2
+echo $1
+}
+
+t2 "t2-1" "t2-2"
 
 function map2ip(){
 host=$1

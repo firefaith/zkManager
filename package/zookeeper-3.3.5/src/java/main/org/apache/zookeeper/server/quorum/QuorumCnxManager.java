@@ -469,10 +469,10 @@ public class QuorumCnxManager {
             while((!shutdown) && (numRetries < 3)){
                 try {
                     ss = ServerSocketChannel.open();
-                    int port = self.quorumPeers.get(self.getId()).electionAddr.getPort();
-                    LOG.info("My election bind port: " + port);
+                    InetSocketAddress electionAddr = self.quorumPeers.get(self.getId()).electionAddr;
+                    LOG.info("My election bind port: " + electionAddr);
                     ss.socket().setReuseAddress(true); 
-                    ss.socket().bind(new InetSocketAddress(port));
+                    ss.socket().bind(electionAddr);
 
                     while (!shutdown) {
                         SocketChannel client = ss.accept();

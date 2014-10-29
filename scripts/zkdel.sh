@@ -1,8 +1,8 @@
 #! /bin/bash
-usage="delete one zookeeper node to the host by ip
+usage="delete zookeeper node to the host by ip
 example:\n
 ./del.sh ip zoo.cfg install.path package.path host.list\n
-1)ip:delete ip from cluster\n
+1)ip:ip or iplistfile path,add to cluster\n
 2)zoo.cfg:current configuration file\n
 3)install.path:like /opt\n
 4)package.path:like ../pacakge/zookeeper\n
@@ -59,25 +59,15 @@ then
   sed -i "\$d" $zoo_file
   ##del ip in host.list
   sed -i "/$ip/d" $host_list
-  #delte crontab task 
-  currentdir=`dirname $0`
-  zkhome="$install_path/${pck_path##*/}"
-  if [ -e "$currentdir/cron.sh" ];then
-    $currentdir/cron.sh s $ip $zkhome zkMonitor.sh del
-    $currentdir/cron.sh s $ip $zkhome do_cleanup.sh del
-  else
-    echo "error:no cron.sh in the $currentdir"
-  fi
-  
   #stop the serive
-  ssh -n $ip "cd $zkhome/bin;./zkServer.sh stop"
+  ssh -n $ip "cd $install_path/${pck_path##*/}/bin;./zkServer.sh stop"
   ##delete remote host(ip) zookeeper files and data file
-  ssh -n $ip "rm -rf $data_dir $zkhome"
+  ssh -n $ip "rm -rf $data_dir $install_path/${pck_path##*/}"
   ##copy zoo.cfg to all host in host.list and restart zookeeper
   while read line
   do
-    scp $zoo_file root@$line:$zkhome/conf
-    ssh $line "cd $zkhome/bin;./zkServer.sh restart"
+    scp $zoo_file root@$line:$install_path/${pck_path##*/}/conf
+    ssh $line "cd $install_path/${pck_path##*/}/bin;./zkServer.sh restart"
   done < $host_list
   echo "completed!"
   exit 0

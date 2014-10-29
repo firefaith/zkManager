@@ -85,7 +85,9 @@ if [ -z $ZOOPIDFILE ]
   then ZOOPIDFILE=$(grep dataDir "$ZOOCFG" | sed -e 's/.*=//')/zookeeper_server.pid
 fi
 
-_ZOO_DAEMON_OUT="$ZOO_LOG_DIR/zookeeper.out"
+#_ZOO_DAEMON_OUT="$ZOO_LOG_DIR/zookeeper.out"
+#_ZOO_DAEMON_OUT="/dev/null"
+_ZOO_DAEMON_OUT="$ZOO_LOG_DIR/zookeeper-`date +%Y%m%d%H%M%S`.log"
 
 case $1 in
 start)

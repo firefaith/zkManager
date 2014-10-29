@@ -1,22 +1,13 @@
-Zookeeper version: 3.4.6-1569965, built on 02/20/2014 09:09 GMT
+Zookeeper version: 3.3.5-1301095, built on 03/15/2012 20:09 GMT
 Clients:
- /10.4.10.156:43204[1](queued=0,recved=125356,sent=125356)
- /10.4.10.156:43203[1](queued=0,recved=99143,sent=99143)
- /10.4.15.20:45262[1](queued=0,recved=96921,sent=96925)
- /10.4.12.224:39532[1](queued=0,recved=96879,sent=96879)
- /10.4.11.2:40517[1](queued=0,recved=96880,sent=96880)
- /10.4.11.2:40510[1](queued=0,recved=96881,sent=96881)
- /10.4.12.224:39536[1](queued=0,recved=96878,sent=96878)
- /10.4.12.224:39531[1](queued=0,recved=96924,sent=96928)
- /10.4.10.156:34822[0](queued=0,recved=1,sent=0)
+ /10.4.10.156:45423[0](queued=0,recved=1,sent=0)
 
-Latency min/avg/max: 0/0/1440
-Received: 806917
-Sent: 806924
-Connections: 9
+Latency min/avg/max: 0/0/0
+Received: 1
+Sent: 0
 Outstanding: 0
-Zxid: 0x8000000c6
-Mode: leader
-Node count: 45
-2 connections watching 7 paths
-Total watches:14
+Zxid: 0x100000000
+Mode: follower
+Node count: 4
+0 connections watching 0 paths
+Total watches:0

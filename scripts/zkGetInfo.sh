@@ -1,5 +1,6 @@
 #! /bin/bash
-usage="get zk infomation. ./zkGetInfo.sh ip port\n"
+usage="get zk infomation. ./zkGetInfo.sh ip port\n
+make sure you have install nc locally."
 
 if [ $# -ne 2 ]
   then

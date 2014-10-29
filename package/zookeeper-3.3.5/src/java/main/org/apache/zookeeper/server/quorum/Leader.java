@@ -131,10 +131,9 @@ public class Leader {
         try {
             ss = new ServerSocket();
             ss.setReuseAddress(true);
-            ss.bind(new InetSocketAddress(self.getQuorumAddress().getPort()));
+            ss.bind(self.getQuorumAddress());
         } catch (BindException e) {
-            LOG.error("Couldn't bind to port "
-                    + self.getQuorumAddress().getPort(), e);
+            LOG.error("Couldn't bind to port " + self.getQuorumAddress(), e);
             throw e;
         }
         this.zk=zk;
